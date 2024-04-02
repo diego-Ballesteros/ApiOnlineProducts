@@ -1,2 +1,4 @@
-package com.unimagdalena.onlineProducts.controller;public class ProductController {
+package com.unimagdalena.onlineProducts.controller;
+
+public class ProductController {
 }

@@ -1,2 +1,4 @@
-package com.unimagdalena.onlineProducts.persistence.repository;public interface ProductRepository {
+package com.unimagdalena.onlineProducts.persistence.repository;
+
+public interface ProductRepository {
 }

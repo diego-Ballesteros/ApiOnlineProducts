@@ -1,2 +1,4 @@
-package com.unimagdalena.onlineProducts.service.IMPL;public interface CustomerService {
+package com.unimagdalena.onlineProducts.service;
+
+public interface CustomerService {
 }

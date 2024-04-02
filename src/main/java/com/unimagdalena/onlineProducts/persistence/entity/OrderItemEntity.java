@@ -33,7 +33,7 @@ public class OrderItemEntity {
 
     // Relation
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id_order",
             insertable = false, updatable = false)
     @JsonIgnore
@@ -43,5 +43,5 @@ public class OrderItemEntity {
     @JoinColumn(name = "product_id", referencedColumnName = "id_product",
             insertable = false, updatable = false)
     @JsonIgnore
-    private ProductEntity product;*/
+    private ProductEntity product;
 }

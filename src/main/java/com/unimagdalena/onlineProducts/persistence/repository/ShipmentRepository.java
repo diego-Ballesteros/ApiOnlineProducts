@@ -1,2 +1,4 @@
-package com.unimagdalena.onlineProducts.persistence.repository;public interface ShipmentRepository {
+package com.unimagdalena.onlineProducts.persistence.repository;
+
+public interface ShipmentRepository {
 }

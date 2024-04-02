@@ -1,2 +1,4 @@
-package com.unimagdalena.onlineProducts.service;public interface OrderService {
+package com.unimagdalena.onlineProducts.service;
+
+public interface OrderService {
 }

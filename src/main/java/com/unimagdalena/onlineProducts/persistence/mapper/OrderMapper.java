@@ -1,2 +1,4 @@
-package com.unimagdalena.onlineProducts.persistence.mapper;public interface OrderMapper {
+package com.unimagdalena.onlineProducts.persistence.mapper;
+
+public interface OrderMapper {
 }

@@ -1,2 +1,4 @@
-package com.unimagdalena.onlineProducts.service.IMPL;public class ProductService {
+package com.unimagdalena.onlineProducts.service.IMPL;
+
+public class ProductServiceIMPL {
 }

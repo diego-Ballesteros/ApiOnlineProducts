@@ -30,18 +30,18 @@ public class OrderEntity {
 
     // FK ----------------------
 
-    @Column(name = "client_id")
-    private Long clientId;
+    @Column(name = "customer_id")
+    private Long customerId;
 
     @Column(name = "payment_id")
     private Long paymentId;
     // Relations ---------------------
 
     @ManyToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "id_client"
+    @JoinColumn(name = "customer_id", referencedColumnName = "id_customer"
             , insertable = false, updatable = false)
     @JsonIgnore
-    private CustomerEntity client;
+    private CustomerEntity customer;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderItemEntity> orderItems;

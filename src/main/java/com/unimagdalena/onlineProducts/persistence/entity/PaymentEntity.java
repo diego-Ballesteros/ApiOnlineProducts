@@ -27,10 +27,6 @@ public class PaymentEntity {
     @Column(name = "payment_method")
     private MethodPay paymentMethod;
 
-    // FK ----------------------
-    @Column(name = "order_id")
-    private Long orderId;
-
     // Relations ---------------
     @OneToOne(mappedBy = "payment")
     private OrderEntity order;
