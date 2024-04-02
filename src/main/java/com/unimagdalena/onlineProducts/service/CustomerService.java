@@ -13,6 +13,7 @@ public interface CustomerService {
 
     // CRUD ---
     CustomerEntity save(CustomerEntity clientEntity);
+    CustomerEntity Update(int id, CustomerDto customerDto);
     void deleteById(int id);
 
     CustomerEntity findById(int id);

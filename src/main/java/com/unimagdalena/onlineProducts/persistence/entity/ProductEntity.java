@@ -34,4 +34,13 @@ public class ProductEntity {
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<OrderItemEntity> orderItems;
 
+    public ProductEntity update(ProductEntity product){
+        return new ProductEntity(
+                this.idProduct,
+                product.name,
+                product.price,
+                product.stock,
+                null);
+    }
+
 }

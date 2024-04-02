@@ -1,6 +1,7 @@
 package com.unimagdalena.onlineProducts.controller;
 
 import com.unimagdalena.onlineProducts.persistence.DTO.CustomerDto;
+import com.unimagdalena.onlineProducts.persistence.DTO.ProductDto;
 import com.unimagdalena.onlineProducts.persistence.entity.CustomerEntity;
 import com.unimagdalena.onlineProducts.persistence.mapper.CustomerMapper;
 import com.unimagdalena.onlineProducts.service.CustomerService;
@@ -12,7 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/customers")
+@RequestMapping("api/v1/customers")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -33,8 +34,8 @@ public class CustomerController {
         return ResponseEntity.ok(this.customerService.findById(id));
     }
 
-    @GetMapping("/email")
-    public ResponseEntity<CustomerDto> getByEmail(@RequestParam String email){
+    @GetMapping("/email/{email}")
+    public ResponseEntity<CustomerDto> getByEmail(@PathVariable String email){
         return ResponseEntity.ok(this.customerService.findByEmail(email));
     }
     @GetMapping("/address")
@@ -64,13 +65,9 @@ public class CustomerController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<CustomerDto> update(@PathVariable int id, @RequestBody CustomerEntity customerEntity){
-        if(this.customerService.existById(id)){
-            CustomerEntity clientCreated = this.customerService.save(customerEntity);
-            CustomerDto clientDto = this.customerMapper.customerEntityToCustomerDto(clientCreated);
-            return  ResponseEntity.ok(clientDto);
-        }
-        return ResponseEntity.badRequest().build();
+    public ResponseEntity<CustomerEntity> update(@PathVariable int id, @RequestBody CustomerDto customerDto){
+        CustomerEntity customer = this.customerService.Update(id, customerDto);
+        return ResponseEntity.ok(customer);
     }
 
     @DeleteMapping("{id}")

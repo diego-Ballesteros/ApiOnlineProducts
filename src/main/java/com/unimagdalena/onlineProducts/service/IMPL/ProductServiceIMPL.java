@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,6 +70,15 @@ public class ProductServiceIMPL implements ProductService {
     @Override
     public ProductEntity save(ProductEntity productEntity) {
         return this.productRepository.save(productEntity);
+    }
+
+    @Override
+    public Optional<ProductEntity> update(int id, ProductEntity newProduct) {
+        return this.productRepository.findById((long) id)
+                .map(olderProduct -> {
+                    ProductEntity productEntity = olderProduct.update(newProduct);
+                    return this.productRepository.save(productEntity);
+                });
     }
 
     @Override
