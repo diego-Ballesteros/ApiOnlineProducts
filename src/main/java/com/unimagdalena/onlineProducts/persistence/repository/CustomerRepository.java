@@ -1,4 +1,14 @@
 package com.unimagdalena.onlineProducts.persistence.repository;
 
-public interface CustomerRepository {
+import com.unimagdalena.onlineProducts.persistence.entity.CustomerEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
+    CustomerEntity findByEmail(String emial);
+    List<CustomerEntity> findAllByAddress(String address);
+    List<CustomerEntity> findAllByNameStartingWith(String name);
+    boolean existsById(int id);
+    CustomerEntity findById(int id);
 }
