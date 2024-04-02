@@ -26,12 +26,18 @@ public class OrderServiceIMPL implements OrderService {
 
     @Override
     public List<OrderDto> findAllByOderDateBetween(LocalDateTime startDate, LocalDateTime endDate) {
-        return null;
+        List<OrderDto> orderDtos = this.oderRepository.findAllByOderDateBetween(startDate, endDate)
+                .stream().map(order-> this.orderMapper.orderEntityToOrderDto(order))
+                .collect(Collectors.toList());
+        return orderDtos;
     }
 
     @Override
     public List<OrderDto> findAllByCustomerAndStatus(CustomerEntity customer, OrderEntity.Status status) {
-        return null;
+        List<OrderDto> orderDtos = this.oderRepository.findAllByCustomerAndStatus(customer,status)
+                .stream().map(order-> this.orderMapper.orderEntityToOrderDto(order))
+                .collect(Collectors.toList());
+        return orderDtos;
     }
 
     @Override
