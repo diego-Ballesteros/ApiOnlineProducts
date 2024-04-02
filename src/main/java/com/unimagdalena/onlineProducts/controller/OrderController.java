@@ -5,12 +5,15 @@ import com.unimagdalena.onlineProducts.persistence.entity.OrderEntity;
 import com.unimagdalena.onlineProducts.persistence.entity.OrderItemEntity;
 import com.unimagdalena.onlineProducts.persistence.mapper.OrderMapper;
 import com.unimagdalena.onlineProducts.service.OrderService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/orders")
@@ -63,7 +66,18 @@ public class OrderController {
         }
         return ResponseEntity.badRequest().build();
     }
+    @GetMapping("/date-range")
+    public ResponseEntity<List<OrderDto>> findAllByOderDateBetween(@RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                                                                   @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate){
+        return ResponseEntity.ok(this.orderService.findAllByOderDateBetween(startDate, endDate));
+    }
 
-    
-
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<List<OrderDto>> findByCustomerId(@PathVariable int customerId){
+        List<OrderDto> orderDtos = this.orderService.findByCustomerId(customerId)
+                .stream().map(orderEntity -> this.orderMapper.orderEntityToOrderDto(orderEntity))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(orderDtos);
+    }
+ 
 }

@@ -55,7 +55,7 @@ public class OrderEntity {
 
 
     public enum Status {
-        PENDING(1), SENT(2), DELIVERED(3);
+        PENDING(0), SENT(1), DELIVERED(2);
         private final int value;
 
         Status(int value) {

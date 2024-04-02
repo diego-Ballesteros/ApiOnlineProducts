@@ -73,6 +73,11 @@ public class OrderServiceIMPL implements OrderService {
     }
 
     @Override
+    public List<OrderEntity> findByCustomerId(int idCostumer) {
+        return this.oderRepository.findByCustomerId(idCostumer);
+    }
+
+    @Override
     public void delete(int id) {
         this.oderRepository.deleteById((long) id);
     }

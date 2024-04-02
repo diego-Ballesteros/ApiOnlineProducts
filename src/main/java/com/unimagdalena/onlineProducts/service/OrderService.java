@@ -18,6 +18,7 @@ public interface OrderService {
     OrderEntity save (OrderEntity orderEntity);
 
     OrderEntity update(int id, OrderDto orderDto);
+    List<OrderEntity> findByCustomerId(int idCostumer);
 
     void delete (int id );
 

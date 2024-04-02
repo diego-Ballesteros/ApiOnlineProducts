@@ -2,6 +2,7 @@ package com.unimagdalena.onlineProducts.service.IMPL;
 
 import com.unimagdalena.onlineProducts.persistence.DTO.CustomerDto;
 import com.unimagdalena.onlineProducts.persistence.entity.CustomerEntity;
+import com.unimagdalena.onlineProducts.persistence.entity.OrderEntity;
 import com.unimagdalena.onlineProducts.persistence.entity.ProductEntity;
 import com.unimagdalena.onlineProducts.persistence.mapper.CustomerMapper;
 import com.unimagdalena.onlineProducts.persistence.repository.CustomerRepository;

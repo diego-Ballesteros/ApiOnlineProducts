@@ -12,5 +12,8 @@ public class OrderDto {
 
     private LocalDateTime oderDate;
     private OrderEntity.Status status;
+    private Long customerId;
+    private Long paymentId;
+
     //private List<OrderItemEntity> items;
 }
