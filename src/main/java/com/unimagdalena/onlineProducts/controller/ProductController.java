@@ -28,8 +28,8 @@ public class ProductController {
         return ResponseEntity.ok(this.productService.finAllByPriceNotExceedPriceAndStock(price, stock));
     }
 
-    @GetMapping("/find-id")
-    public ResponseEntity<ProductDto> findAllById(@RequestParam int id){
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDto> getById(@PathVariable int id){
         ProductDto productDto = this.productMapper.productEntityToProductDto(this.productService.findByid(id));
         return ResponseEntity.ok(productDto);
     }

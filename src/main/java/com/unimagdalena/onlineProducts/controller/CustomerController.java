@@ -27,6 +27,12 @@ public class CustomerController {
     public ResponseEntity<List<CustomerDto>> getAll(){
         return ResponseEntity.ok(this.customerService.findAll());
     }
+
+    @GetMapping("{id}")
+    public ResponseEntity<CustomerEntity> getById(@PathVariable int id){
+        return ResponseEntity.ok(this.customerService.findById(id));
+    }
+
     @GetMapping("/email")
     public ResponseEntity<CustomerDto> getByEmail(@RequestParam String email){
         return ResponseEntity.ok(this.customerService.findByEmail(email));
@@ -42,25 +48,25 @@ public class CustomerController {
     }
 
     @PostMapping()
-    public ResponseEntity<CustomerDto> addClient(CustomerEntity clientEntity){
-        if(clientEntity.getIdCustomer()==null || !this.customerService.existById(Math.toIntExact(clientEntity.getIdCustomer()))){
-            CustomerEntity clientCreated = this.customerService.save(clientEntity);
+    public ResponseEntity<CustomerDto> addClient(@RequestBody  CustomerDto customerDto){
+        CustomerEntity customerEntity = this.customerMapper.customerDtoToCustomerEntity(customerDto);
+        if(customerEntity.getIdCustomer()==null || !this.customerService.existById(Math.toIntExact(customerEntity.getIdCustomer()))){
+            CustomerEntity customerCreated = this.customerService.save(customerEntity);
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
                     .path("/{idCustomer}")
-                    .buildAndExpand(clientCreated.getIdCustomer())
+                    .buildAndExpand(customerCreated.getIdCustomer())
                     .toUri();
-            CustomerDto clientDto = this.customerMapper.customerEntityToCustomerDto(clientCreated);
+            CustomerDto clientDto = this.customerMapper.customerEntityToCustomerDto(customerCreated);
             return  ResponseEntity.created(location).body(clientDto);
         }
         return ResponseEntity.badRequest().build();
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<CustomerDto> update(@PathVariable int id){
+    public ResponseEntity<CustomerDto> update(@PathVariable int id, @RequestBody CustomerEntity customerEntity){
         if(this.customerService.existById(id)){
-            CustomerEntity clientFind = this.customerService.findById(id);
-            CustomerEntity clientCreated = this.customerService.save(clientFind);
+            CustomerEntity clientCreated = this.customerService.save(customerEntity);
             CustomerDto clientDto = this.customerMapper.customerEntityToCustomerDto(clientCreated);
             return  ResponseEntity.ok(clientDto);
         }
