@@ -32,6 +32,20 @@ public class PaymentEntity {
     private OrderEntity order;
 
     public enum MethodPay {
-        CASH, CREDIT_CARD, PAYPAL, NEQUI, DAVIPLATA, PSE
+        CASH(1),
+        CREDIT_CARD(2),
+        PAYPAL(3),
+        NEQUI(4),
+        DAVIPLATA(5),
+        PSE(6);
+
+        private final int value;
+
+        MethodPay(int value) {
+            this.value = value;
+        }
+        public int getValue() {
+            return value;
+        }
     }
 }

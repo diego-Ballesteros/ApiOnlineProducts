@@ -14,6 +14,6 @@ public interface OderRepository extends JpaRepository<OrderEntity, Long> {
     List<OrderEntity> findAllByOderDateBetween(LocalDateTime startDate, LocalDateTime endDate);
     List<OrderEntity> findAllByCustomerAndStatus(CustomerEntity customer, OrderEntity.Status status);
 
-    OrderEntity findById(int id);
+    OrderEntity findByIdOrder(int id);
 
 }

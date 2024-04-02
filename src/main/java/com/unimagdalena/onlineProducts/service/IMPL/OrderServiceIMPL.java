@@ -44,7 +44,7 @@ public class OrderServiceIMPL implements OrderService {
 
     @Override
     public OrderDto getById(int id) {
-       OrderEntity orderEntity = this.oderRepository.findById(id);
+       OrderEntity orderEntity = this.oderRepository.findByIdOrder(id);
        OrderDto orderDto = this.orderMapper.orderEntityToOrderDto(orderEntity);
        return orderDto;
 
@@ -69,5 +69,10 @@ public class OrderServiceIMPL implements OrderService {
     @Override
     public void delete(int id) {
         this.oderRepository.deleteById((long) id);
+    }
+
+    @Override
+    public boolean existById(int id) {
+        return this.oderRepository.existsById((long) id);
     }
 }

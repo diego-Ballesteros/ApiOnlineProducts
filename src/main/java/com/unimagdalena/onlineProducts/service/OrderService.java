@@ -21,4 +21,6 @@ public interface OrderService {
 
     void delete (int id );
 
+    boolean existById(int id);
+
 }
