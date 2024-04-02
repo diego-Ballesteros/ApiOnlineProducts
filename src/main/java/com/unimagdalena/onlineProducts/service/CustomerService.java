@@ -15,7 +15,7 @@ public interface CustomerService {
     CustomerEntity save(CustomerEntity clientEntity);
     void deleteById(int id);
 
-    CustomerEntity findByid(int id);
+    CustomerEntity findById(int id);
 
     boolean existById(int id);
 }

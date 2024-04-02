@@ -62,12 +62,12 @@ public class CustomerServiceIMPL implements CustomerService {
     }
 
     @Override
-    public CustomerEntity findByid(int id) {
-        return this.customerRepository.findById(id);
+    public CustomerEntity findById(int id) {
+        return this.customerRepository.findByIdCustomer(id);
     }
 
     @Override
     public boolean existById(int id) {
-        return this.customerRepository.existsById(id);
+        return this.customerRepository.existsByIdCustomer((int) id);
     }
 }

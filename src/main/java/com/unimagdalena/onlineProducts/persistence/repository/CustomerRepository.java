@@ -9,6 +9,6 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> 
     CustomerEntity findByEmail(String emial);
     List<CustomerEntity> findAllByAddress(String address);
     List<CustomerEntity> findAllByNameStartingWith(String name);
-    boolean existsById(int id);
-    CustomerEntity findById(int id);
+    boolean existsByIdCustomer(int id);
+    CustomerEntity findByIdCustomer(int id);
 }
