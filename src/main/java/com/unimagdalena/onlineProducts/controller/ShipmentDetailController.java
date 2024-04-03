@@ -67,6 +67,5 @@ public class ShipmentDetailController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();
-        // falta end poind no crud
     }
 }
