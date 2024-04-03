@@ -82,6 +82,6 @@ public class OrderItemServiceIMPL implements OrderItemService {
 
     @Override
     public void delete(int id) {
-        this.orderItemRepository.deleteById((long) id);
+        this.orderItemRepository.deleteById(Long.valueOf(id));
     }
 }

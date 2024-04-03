@@ -30,7 +30,14 @@ public class ShipmentDetailController {
     public ResponseEntity<ShipmentDetailDto> getByid(@PathVariable int id){
         return ResponseEntity.ok(this.shipmentDetailService.findByIdDetail(id));
     }
-
+    @GetMapping("/carrier")
+    public ResponseEntity<List<ShipmentDetailDto>> findAllByCarrier(@RequestParam String carrier){
+        return ResponseEntity.ok(this.shipmentDetailService.findAllByCarrier(carrier));
+    }
+    @GetMapping("/order/{orderId}")
+    public ResponseEntity<List<ShipmentDetailDto>> findAllByOrderId(@PathVariable int orderId){
+        return ResponseEntity.ok(this.shipmentDetailService.findAllByOrderId(orderId));
+    }
     @PostMapping()
     public ResponseEntity<ShipmentDetailDto> addShipment (@RequestBody ShipmentDetailDto shipmentDto){
         ShipmentDetailEntity shipmentDetailEntity = this.shipmentDetailMapper.shipmentDetailDtoToShipmentDetailEntity(shipmentDto);

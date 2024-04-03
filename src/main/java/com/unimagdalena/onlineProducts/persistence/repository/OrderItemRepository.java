@@ -14,5 +14,4 @@ public interface OrderItemRepository extends JpaRepository<OrderItemEntity, Long
     OrderItemEntity findByIdOrderItem(int id);
     @Query("SELECT SUM(oi.quantity * oi.unitPrice) FROM OrderItemEntity oi WHERE oi.productId = :productId")
     Double sumTotalSalesByProductId(@Param("productId") Long productId);
-    void delete(int id);
 }
