@@ -56,7 +56,7 @@ public class PaymentServiceIMPL implements PaymentService {
         Optional<PaymentEntity> optionalPayment = this.paymentRepository.findById((long) id);
         if(optionalPayment.isPresent()){
             PaymentEntity existPayment = optionalPayment.get();
-            BeanUtils.copyProperties(optionalPayment, existPayment);
+            BeanUtils.copyProperties(paymentDto, existPayment);
             return this.paymentRepository.save(existPayment);
         }
         throw  new RuntimeException("Payment NOt found with that Id");
