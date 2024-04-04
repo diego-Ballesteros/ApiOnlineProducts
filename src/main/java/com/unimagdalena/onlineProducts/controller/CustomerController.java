@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/customers")
@@ -30,13 +31,21 @@ public class CustomerController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<CustomerEntity> getById(@PathVariable int id){
-        return ResponseEntity.ok(this.customerService.findById(id));
+    public ResponseEntity<Optional<CustomerDto>> getById(@PathVariable int id){
+        Optional<CustomerDto> customerDto = this.customerService.findById(id);
+        if(customerDto.isPresent()){
+            return ResponseEntity.ok(customerDto);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<CustomerDto> getByEmail(@PathVariable String email){
-        return ResponseEntity.ok(this.customerService.findByEmail(email));
+    public ResponseEntity<Optional<CustomerDto>> getByEmail(@PathVariable String email){
+        Optional<CustomerDto> customerDto = this.customerService.findByEmail(email);
+        if(customerDto.isPresent()){
+            return ResponseEntity.ok(customerDto);
+        }
+        return ResponseEntity.badRequest().build();
     }
     @GetMapping("/address")
     public ResponseEntity<List<CustomerDto>> findAllByAddress(@RequestParam String address){

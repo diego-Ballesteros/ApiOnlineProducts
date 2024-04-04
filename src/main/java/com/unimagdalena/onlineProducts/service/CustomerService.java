@@ -5,9 +5,10 @@ import com.unimagdalena.onlineProducts.persistence.entity.CustomerEntity;
 import com.unimagdalena.onlineProducts.persistence.entity.OrderEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CustomerService {
-    CustomerDto findByEmail(String email);
+    Optional<CustomerDto> findByEmail(String email);
     List<CustomerDto> findByAddress(String address);
     List<CustomerDto> findAllNameStarting (String name);
     List<CustomerDto> findAll ();
@@ -18,7 +19,7 @@ public interface CustomerService {
 
     void deleteById(int id);
 
-    CustomerEntity findById(int id);
+    Optional<CustomerDto> findById(int id);
 
     boolean existById(int id);
 }

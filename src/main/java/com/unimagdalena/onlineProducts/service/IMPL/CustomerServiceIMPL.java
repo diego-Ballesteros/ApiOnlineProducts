@@ -25,10 +25,10 @@ public class CustomerServiceIMPL implements CustomerService {
     }
 
     @Override
-    public CustomerDto findByEmail(String email) {
+    public Optional<CustomerDto> findByEmail(String email) {
         CustomerEntity customerEntity = this.customerRepository.findByEmail(email);
         CustomerDto customerDto = this.customerMapper.customerEntityToCustomerDto(customerEntity);
-        return customerDto;
+        return Optional.ofNullable(customerDto);
     }
 
     @Override
@@ -78,8 +78,10 @@ public class CustomerServiceIMPL implements CustomerService {
     }
 
     @Override
-    public CustomerEntity findById(int id) {
-        return this.customerRepository.findByIdCustomer(id);
+    public Optional<CustomerDto> findById(int id) {
+        CustomerEntity customerEntity = this.customerRepository.findByIdCustomer(id);
+        CustomerDto customerDto = this.customerMapper.customerEntityToCustomerDto(customerEntity);
+        return Optional.ofNullable(customerDto);
     }
 
     @Override

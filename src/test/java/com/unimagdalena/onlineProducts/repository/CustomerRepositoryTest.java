@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
-public class CustomerRepositoryTest extends AbstractIntegrationDBTest {
+public class CustomerRepositoryTest extends AbstractIntegrationDBTest{
     private final CustomerRepository customerRepository;
 
     @Autowired

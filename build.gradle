@@ -34,10 +34,19 @@ dependencies {
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:mysql'
 
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	// https://mvnrepository.com/artifact/org.testcontainers/mysql
+	testImplementation group: 'org.testcontainers', name: 'mysql', version: '1.19.7'
+	// https://mvnrepository.com/artifact/org.mockito/mockito-core
+	testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.10.0'
+
+
+
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+	include 'com/unimagdalena/onlineProducts/service/CustomerServiceTest.class'
 }

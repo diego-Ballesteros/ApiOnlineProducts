@@ -1,8 +1,10 @@
 package com.unimagdalena.onlineProducts.persistence.DTO;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class ShipmentDetailDto {
 
     private String address;
