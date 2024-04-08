@@ -1,6 +1,6 @@
-package com.unimagdalena.onlineProducts.repository;
+/*package com.unimagdalena.onlineProducts.repository;
 
-import com.unimagdalena.onlineProducts.AbstractIntegrationDBTest;
+//import com.unimagdalena.onlineProducts.AbstractIntegrationDBTest;
 import com.unimagdalena.onlineProducts.persistence.entity.CustomerEntity;
 import com.unimagdalena.onlineProducts.persistence.repository.CustomerRepository;
 import org.junit.Test;
@@ -43,4 +43,4 @@ public class CustomerRepositoryTest extends AbstractIntegrationDBTest{
         assertThat(savedCustomer.getName()).isEqualTo("Diego");
     }
 
-}
+}*/

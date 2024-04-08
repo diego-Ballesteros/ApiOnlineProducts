@@ -1,4 +1,4 @@
-/*package com.unimagdalena.onlineProducts;
+package com.unimagdalena.onlineProducts;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -20,4 +20,4 @@ public class TestOnlineProductsApplication {
 		SpringApplication.from(OnlineProductsApplication::main).with(TestOnlineProductsApplication.class).run(args);
 	}
 
-}*/
+}

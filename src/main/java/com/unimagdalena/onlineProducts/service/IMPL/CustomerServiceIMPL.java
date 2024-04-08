@@ -32,11 +32,15 @@ public class CustomerServiceIMPL implements CustomerService {
     }
 
     @Override
-    public List<CustomerDto> findByAddress(String address) {
-        List<CustomerDto> customerDtos = this.customerRepository.findAllByAddress(address)
-                .stream().map(customer -> this.customerMapper.customerEntityToCustomerDto(customer) )
-                .collect(Collectors.toList());
-        return customerDtos;
+    public CustomerEntity getByEmail(String email) {
+        return this.customerRepository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<CustomerDto> findByAddress(String address) {
+        CustomerEntity customerEntity = this.customerRepository.findByAddress(address);
+        CustomerDto customerDto = this.customerMapper.customerEntityToCustomerDto(customerEntity);
+        return Optional.ofNullable(customerDto);
     }
 
     @Override

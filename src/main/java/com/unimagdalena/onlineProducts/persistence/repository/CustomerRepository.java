@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
     CustomerEntity findByEmail(String emial);
-    List<CustomerEntity> findAllByAddress(String address);
+    CustomerEntity findByAddress(String address);
     List<CustomerEntity> findAllByNameStartingWith(String name);
     boolean existsByIdCustomer(int id);
     CustomerEntity findByIdCustomer(int id);

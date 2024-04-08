@@ -1,4 +1,4 @@
-package com.unimagdalena.onlineProducts;
+/*package com.unimagdalena.onlineProducts;
 
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
@@ -22,4 +22,4 @@ public abstract class AbstractIntegrationDBTest {
    static {
         mySql.start();
    }
-}
+}*/

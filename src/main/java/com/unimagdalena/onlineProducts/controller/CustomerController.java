@@ -48,8 +48,12 @@ public class CustomerController {
         return ResponseEntity.badRequest().build();
     }
     @GetMapping("/address")
-    public ResponseEntity<List<CustomerDto>> findAllByAddress(@RequestParam String address){
-        return ResponseEntity.ok(this.customerService.findByAddress(address));
+    public ResponseEntity<Optional<CustomerDto>> findAllByAddress(@RequestParam String address){
+        Optional<CustomerDto> customerDto = this.customerService.findByAddress(address);
+        if(customerDto.isPresent()){
+            return ResponseEntity.ok(customerDto);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/name-starting")
