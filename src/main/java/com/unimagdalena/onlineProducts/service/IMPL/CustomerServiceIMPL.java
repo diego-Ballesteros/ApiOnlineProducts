@@ -30,12 +30,6 @@ public class CustomerServiceIMPL implements CustomerService {
         CustomerDto customerDto = this.customerMapper.customerEntityToCustomerDto(customerEntity);
         return Optional.ofNullable(customerDto);
     }
-
-    @Override
-    public CustomerEntity getByEmail(String email) {
-        return this.customerRepository.findByEmail(email);
-    }
-
     @Override
     public Optional<CustomerDto> findByAddress(String address) {
         CustomerEntity customerEntity = this.customerRepository.findByAddress(address);

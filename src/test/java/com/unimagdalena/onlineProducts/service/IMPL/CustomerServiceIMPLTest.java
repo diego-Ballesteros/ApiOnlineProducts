@@ -46,18 +46,50 @@ class CustomerServiceIMPLTest {
                 .address("concepcion 4")
                 .build();
     }
+    @Test
+    void givenIdCustomer_whenFindByIdCustomer_thenReturnOptionalCudtomerDto(){
+        Long idCustomer = 1L;
+        when(this.customerRepository.findByIdCustomer(Math.toIntExact(idCustomer))).thenReturn(customerEntity);
+        when(this.customerMapper.customerEntityToCustomerDto(customerEntity)).thenReturn(customerDto);
+        when(this.customerMapper.customerDtoToCustomerEntity(customerDto)).thenReturn(customerEntity);
+
+        Optional<CustomerDto> resultCustomer = this.customerServiceIMPL.findById(Math.toIntExact(idCustomer));
+
+        assertNotNull(resultCustomer);
+        assertTrue(resultCustomer.isPresent());
+        assertEquals(customerDto, resultCustomer.get());
+        assertEquals(idCustomer, this.customerMapper.customerDtoToCustomerEntity(resultCustomer.get()).getIdCustomer());
+    }
 
     @DisplayName("JUnit test for findByEmail Method")
     @Test
     void givenCustomerEmail_whenFindByEmail_thenReturnOptionalCustomerDto() {
-       // Arrange
+
         String email = "diego@gmail";
-        when(customerRepository.findByEmail(email)).thenReturn(customerEntity);
-        when(customerMapper.customerEntityToCustomerDto(customerEntity)).thenReturn(customerDto);
-        // Act
-        Optional<CustomerDto> result = customerServiceIMPL.findByEmail(email);
-        // Assert
-        assertEquals(Optional.ofNullable(customerDto), result);
+        when(this.customerRepository.findByEmail(email)).thenReturn(customerEntity);
+        when(this.customerMapper.customerEntityToCustomerDto(customerEntity)).thenReturn(customerDto);
+
+        Optional<CustomerDto> result = this.customerServiceIMPL.findByEmail(email);
+
+        assertNotNull(result, "El resultado no debería ser nulo");
+        assertTrue(result.isPresent(), "El resultado debería estar presente");
+        assertEquals(customerDto, result.get(), "El resultado debería coincidir con el customerDto esperado");
+        assertEquals(email, result.get().getEmail(), "El email en el resultado debería coincidir con el email esperado");
+    }
+
+    @DisplayName("JUnit test for findByAddress method")
+    @Test
+    void givenCustomerAddress_whenFindByAddress_thenReturnOptionalCustomerDto(){
+        String address = "concepcion 4";
+        when(this.customerRepository.findByAddress(address)).thenReturn(customerEntity);
+        when(this.customerMapper.customerEntityToCustomerDto(customerEntity)).thenReturn(customerDto);
+
+        Optional<CustomerDto> resultCustomer = this.customerServiceIMPL.findByAddress(address);
+
+        assertNotNull(resultCustomer);
+        assertTrue(resultCustomer.isPresent());
+        assertEquals(customerDto, resultCustomer.get());
+        assertEquals(address, resultCustomer.get().getAddress());
     }
 
 }

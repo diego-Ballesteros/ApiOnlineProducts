@@ -9,7 +9,6 @@ import java.util.Optional;
 
 public interface CustomerService {
     Optional<CustomerDto> findByEmail(String email);
-    CustomerEntity getByEmail(String email);
     Optional<CustomerDto> findByAddress(String address);
     List<CustomerDto> findAllNameStarting (String name);
     List<CustomerDto> findAll ();

@@ -58,7 +58,11 @@ public class CustomerController {
 
     @GetMapping("/name-starting")
     public ResponseEntity<List<CustomerDto>> findAllByNameStartingWith(@RequestParam String name){
-        return ResponseEntity.ok(this.customerService.findAllNameStarting(name));
+        List<CustomerDto> customerDtos = this.customerService.findAllNameStarting(name);
+        if(!customerDtos.isEmpty()) {
+            return ResponseEntity.ok(customerDtos);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping()
