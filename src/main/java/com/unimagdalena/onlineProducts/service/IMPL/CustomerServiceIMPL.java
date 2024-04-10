@@ -66,7 +66,7 @@ public class CustomerServiceIMPL implements CustomerService {
             BeanUtils.copyProperties(customerDto, existCustomer);
             return this.customerRepository.save(existCustomer);
         }else{
-            throw new RuntimeException("Customer Not found whit that Id");
+            throw new RuntimeException("Customer Not found with that Id");
         }
     }
 
