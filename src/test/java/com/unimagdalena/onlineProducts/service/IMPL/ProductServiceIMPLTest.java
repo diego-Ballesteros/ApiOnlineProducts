@@ -1,6 +1,7 @@
 package com.unimagdalena.onlineProducts.service.IMPL;
 
 import com.unimagdalena.onlineProducts.persistence.DTO.ProductDto;
+import com.unimagdalena.onlineProducts.persistence.entity.CustomerEntity;
 import com.unimagdalena.onlineProducts.persistence.entity.ProductEntity;
 import com.unimagdalena.onlineProducts.persistence.mapper.ProductMapper;
 import com.unimagdalena.onlineProducts.persistence.repository.ProductRepository;
@@ -30,7 +31,7 @@ class ProductServiceIMPLTest {
     private ProductServiceIMPL productServiceIMPL;
 
     ProductEntity productEntity, productEntity2;
-    ProductDto productDto, productDto2;
+    ProductDto productDto, productDto2, updateproductDto;
     List<ProductEntity>  productEntities = new ArrayList<>();
     List<ProductDto> expectedProductsDto = new ArrayList<>();
 
@@ -60,6 +61,11 @@ class ProductServiceIMPLTest {
                 .name("Play 4")
                 .price(500.0)
                 .stock(100)
+                .build();
+        updateproductDto = ProductDto.builder()
+                .name("updateName")
+                .price(700.0)
+                .stock(500)
                 .build();
 
 
@@ -120,23 +126,71 @@ class ProductServiceIMPLTest {
         Long id = 1l;
         when(this.productRepository.findByIdProduct(Math.toIntExact(id))).thenReturn(productEntity);
         when(this.productMapper.productEntityToProductDto(productEntity)).thenReturn(productDto);
+        when(this.productMapper.productDtoToProductEntity(productDto)).thenReturn(productEntity);
 
         Optional<ProductDto> resultProductDto = this.productServiceIMPL.findByid(Math.toIntExact(id));
 
         assertTrue(resultProductDto.isPresent());
         assertEquals(productDto, resultProductDto.get());
         assertEquals(productDto.getName(), resultProductDto.get().getName());
+        assertEquals(id, this.productMapper.productDtoToProductEntity(resultProductDto.get()).getIdProduct());
     }
+    @DisplayName("JUnit test for exist By id Product Method")
     @Test
-    void existById() {
+    void givenIdProduct_whenExistById_returnTrue() {
+        int id = 1;
+        when(this.productRepository.existsById((long) id)).thenReturn(true);
+
+        boolean result = this.productServiceIMPL.existById(id);
+
+        assertTrue(result);
     }
+    @DisplayName("JUnit test for exist By invalid id Product Method")
     @Test
-    void save() {
+    void givenIdProduct_whenExistById_returnFalse() {
+        int invalidId = 999;
+        when(this.productRepository.existsById((long) invalidId)).thenReturn(false);
+
+        boolean result = this.productServiceIMPL.existById(invalidId);
+
+        assertFalse(result);
     }
+    @DisplayName("JUnit test for save Product Method")
     @Test
-    void update() {
+    void givenProductEntity_whenSave_thenReturnSavedProductEntity() {
+        when(this.productRepository.save(productEntity)).thenReturn(productEntity);
+
+        ProductEntity savedProduct = this.productServiceIMPL.save(productEntity);
+
+        assertNotNull(savedProduct);
+        assertEquals(productEntity, savedProduct);
+        assertEquals(productEntity.getIdProduct(), savedProduct.getIdProduct());
     }
+    @DisplayName("JUnit test for update Product Method")
     @Test
-    void deleteById() {
+    void givenIdProductAndProductDto_whenUpdate_thenReturnProductUpdated() {
+    int id = 1;
+        when(this.productRepository.findById((long) id)).thenReturn(Optional.of(productEntity));
+        when(this.productRepository.save(productEntity)).thenReturn(productEntity);
+
+        ProductEntity resultProduct = this.productServiceIMPL.update(id,updateproductDto);
+
+        assertNotNull(resultProduct);
+        assertEquals(updateproductDto.getName(), resultProduct.getName());
+        assertEquals(updateproductDto.getPrice(), resultProduct.getPrice());
+    }
+    @DisplayName("JUnit test for update invalid Id Product")
+    @Test
+    void givenInvalidIdProductAndProductDto_whenUpdate_thenThrowException() {
+        int invalidId = 999;
+        when(this.productRepository.findById((long) invalidId)).thenReturn(Optional.empty());
+        assertThrows(RuntimeException.class, () -> this.productServiceIMPL.update(invalidId, updateproductDto));
+    }
+    @DisplayName("JUnit test for delete Product Method")
+    @Test
+    void givenValidId_whenDeleteById_thenProductIsDeleted() {
+        int productId = 1;
+        this.productServiceIMPL.deleteById(productId);
+        verify(this.productRepository).deleteById((long) productId);
     }
 }

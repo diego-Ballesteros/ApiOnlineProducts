@@ -68,17 +68,8 @@ public class ProductController {
 
     @PutMapping("{id}")
     public ResponseEntity<ProductEntity> update(@PathVariable("id") int id, @RequestBody ProductDto uProductDto){
-        ProductEntity uProduct = this.productMapper.productDtoToProductEntity(uProductDto);
-        Optional<ProductEntity> updateProduct = this.productService.update(id, uProduct);
-        return updateProduct.map(product -> ResponseEntity.ok().body(product))
-                .orElseGet(()-> {
-                    ProductEntity newProductEntity = this.productService.save(uProduct);
-                    URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                            .path("/{idProduct}")
-                            .buildAndExpand(newProductEntity.getIdProduct())
-                            .toUri();
-                    return ResponseEntity.created(location).body(newProductEntity);
-                });
+        ProductEntity uProduct = this.productService.update(id, uProductDto);
+        return ResponseEntity.ok(uProduct);
     }
 
     @DeleteMapping("{id}")

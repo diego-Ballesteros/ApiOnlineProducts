@@ -12,7 +12,7 @@ public interface ProductService {
     Optional<ProductDto> findByName(String name);
 
     ProductEntity save(ProductEntity productEntity);
-    Optional<ProductEntity> update(int id, ProductEntity product);
+    ProductEntity update(int id, ProductDto product);
 
     Optional<ProductDto> findByid(int id);
 

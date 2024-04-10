@@ -1,10 +1,13 @@
 package com.unimagdalena.onlineProducts.service.IMPL;
 
+import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.unimagdalena.onlineProducts.persistence.DTO.ProductDto;
 import com.unimagdalena.onlineProducts.persistence.entity.ProductEntity;
 import com.unimagdalena.onlineProducts.persistence.mapper.ProductMapper;
 import com.unimagdalena.onlineProducts.persistence.repository.ProductRepository;
 import com.unimagdalena.onlineProducts.service.ProductService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -79,12 +82,15 @@ public class ProductServiceIMPL implements ProductService {
     }
 
     @Override
-    public Optional<ProductEntity> update(int id, ProductEntity newProduct) {
-        return this.productRepository.findById((long) id)
-                .map(olderProduct -> {
-                    ProductEntity productEntity = olderProduct.update(newProduct);
-                    return this.productRepository.save(productEntity);
-                });
+    public ProductEntity update(int id, ProductDto newProductDto) {
+        Optional<ProductEntity> optionalProduct = this.productRepository.findById((long) id);
+        if(optionalProduct.isPresent()){
+            ProductEntity existProduct = optionalProduct.get();
+            BeanUtils.copyProperties(newProductDto, existProduct);
+            return this.productRepository.save(existProduct);
+        }else {
+            throw new RuntimeException("product Not Found with that id");
+        }
     }
 
     @Override

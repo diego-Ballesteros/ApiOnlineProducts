@@ -72,6 +72,7 @@ public class CustomerServiceIMPL implements CustomerService {
 
     @Override
     public void deleteById(int id) {
+
         this.customerRepository.deleteById((long) id);
     }
 
