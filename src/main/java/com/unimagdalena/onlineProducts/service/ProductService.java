@@ -9,12 +9,12 @@ import java.util.Optional;
 public interface ProductService {
     List<ProductDto> findAllIsInStock();
     List<ProductDto> finAllByPriceNotExceedPriceAndStock(Double price, int stock);
-    ProductDto findByName(String name);
+    Optional<ProductDto> findByName(String name);
 
     ProductEntity save(ProductEntity productEntity);
     Optional<ProductEntity> update(int id, ProductEntity product);
 
-    ProductEntity findByid(int id);
+    Optional<ProductDto> findByid(int id);
 
     boolean existById (int id);
 

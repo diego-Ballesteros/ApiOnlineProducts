@@ -59,12 +59,18 @@ public class ProductServiceIMPL implements ProductService {
 
         return productDtos;
     }
+    @Override
+    public  Optional<ProductDto> findByid(int id) {
+        ProductEntity productEntity = this.productRepository.findByIdProduct(id);
+        ProductDto productDto = this.productMapper.productEntityToProductDto(productEntity);
+        return Optional.ofNullable(productDto);
+    }
 
     @Override
-    public ProductDto findByName(String name) {
+    public Optional<ProductDto> findByName(String name) {
         ProductEntity productEntity = this.productRepository.findByName(name);
         ProductDto productDto = this.productMapper.productEntityToProductDto(productEntity);
-        return productDto;
+        return Optional.ofNullable(productDto);
     }
 
     @Override
@@ -79,11 +85,6 @@ public class ProductServiceIMPL implements ProductService {
                     ProductEntity productEntity = olderProduct.update(newProduct);
                     return this.productRepository.save(productEntity);
                 });
-    }
-
-    @Override
-    public ProductEntity findByid(int id) {
-        return (ProductEntity) this.productRepository.findByIdProduct(id);
     }
 
     @Override

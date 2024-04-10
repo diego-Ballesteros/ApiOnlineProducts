@@ -65,6 +65,7 @@ class CustomerServiceIMPLTest {
                 .address("concepcion 5")
                 .build();
     }
+    @DisplayName("JUnit test for findByIdCustomer Method")
     @Test
     void givenIdCustomer_whenFindByIdCustomer_thenReturnOptionalCudtomerDto(){
         Long idCustomer = 1L;
@@ -133,6 +134,7 @@ class CustomerServiceIMPLTest {
         assertEquals("Diego Cediel", resultCustomers.get(1).getName());
     }
 
+    @DisplayName("JUnit test for findAll Method")
     @Test
     void whenFindAll_thenReturnListOfCustomerDtos(){
         List<CustomerEntity> customerEntities = new ArrayList<>();
@@ -152,24 +154,19 @@ class CustomerServiceIMPLTest {
         assertEquals(expectedCustomerDtos, resultCustomerDtos);
     }
 
+    @DisplayName("JUnit test for save Method")
     @Test
     void givenCustomer_whenSaveCustomer_thenReturnSavedCustomer(){
-        CustomerEntity customerToSave = CustomerEntity.builder()
-                .idCustomer(1L)
-                .name("Diego Ballesteros")
-                .email("diego@gmail")
-                .address("concepcion 4")
-                .orders(new ArrayList<>())
-                .build();
-        when(this.customerRepository.save(customerToSave)).thenReturn(customerEntity);
+        when(this.customerRepository.save(customerEntity)).thenReturn(customerEntity);
 
-        CustomerEntity savedCustomer = this.customerServiceIMPL.save(customerToSave);
+        CustomerEntity savedCustomer = this.customerServiceIMPL.save(customerEntity);
 
         assertNotNull(savedCustomer);
         assertEquals(savedCustomer, customerEntity);
         assertEquals(savedCustomer.getName(), customerEntity.getName());
     }
 
+    @DisplayName("JUnit test for update Method")
     @Test
     void givenValidIdAndCustomerDto_whenUpdate_thenCustomerIsUpdated() {
 
@@ -191,6 +188,7 @@ class CustomerServiceIMPLTest {
         assertEquals(updateCustomerDto.getAddress(), updatedCustomer.getAddress());
     }
 
+    @DisplayName("JUnit test for update invalid Id Method")
     @Test
     void givenInvalidId_whenUpdate_thenThrowException() {
 
@@ -206,7 +204,7 @@ class CustomerServiceIMPLTest {
         assertThrows(RuntimeException.class, () -> this.customerServiceIMPL.Update(invalidId, updateCustomerDto),
                 "Debería lanzarse una excepción cuando no se encuentra el cliente con el ID proporcionado");
     }
-
+    @DisplayName("JUnit test for delete Method")
     @Test
     void givenValidId_whenDeleteById_thenCustomerIsDeleted() {
         int idToDelete = 1;
@@ -216,6 +214,7 @@ class CustomerServiceIMPLTest {
         verify(this.customerRepository).deleteById((long) idToDelete);
     }
 
+    @DisplayName("JUnit test for existById Method")
     @Test
     void givenValidId_whenExistById_thenReturnTrue() {
         int id = 1;
@@ -226,6 +225,7 @@ class CustomerServiceIMPLTest {
         assertTrue(result);
     }
 
+    @DisplayName("JUnit test for existById invalid Id Method")
     @Test
     void givenInvalidId_whenExistById_thenReturnFalse() {
         int invalidId = 999;

@@ -33,14 +33,21 @@ public class ProductController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ProductDto> getById(@PathVariable int id){
-        ProductDto productDto = this.productMapper.productEntityToProductDto(this.productService.findByid(id));
-        return ResponseEntity.ok(productDto);
+    public ResponseEntity<Optional<ProductDto>> getById(@PathVariable int id){
+        Optional<ProductDto> productDto = this.productService.findByid(id);
+        if(productDto.isPresent()){
+            return ResponseEntity.ok(productDto);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/name")
-    public ResponseEntity<ProductDto> findAllById(@RequestParam String name){
-        return ResponseEntity.ok(this.productService.findByName(name));
+    public ResponseEntity<Optional<ProductDto>> findAllByName(@RequestParam String name){
+        Optional<ProductDto> productDto = this.productService.findByName(name);
+        if(productDto.isPresent()){
+            return ResponseEntity.ok(productDto);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping()
