@@ -11,14 +11,12 @@ import java.util.Optional;
 
 public interface OrderService {
     List<OrderDto> findAllByOderDateBetween(LocalDateTime startDate, LocalDateTime endDate);
-    List<OrderDto> findAllByCustomerAndStatus(CustomerEntity customer, OrderEntity.Status status);
     List<OrderDto> findAll();
-
-    OrderDto getById(int id);
+    List<OrderDto> findAllByCustomerAndStatus(CustomerEntity customer, OrderEntity.Status status);
+    Optional<OrderDto> getById(int id);
     OrderEntity save (OrderEntity orderEntity);
-
     OrderEntity update(int id, OrderDto orderDto);
-    List<OrderEntity> findByCustomerId(int idCostumer);
+    List<OrderDto> findByCustomerId(int idCostumer);
 
     void delete (int id );
 

@@ -49,10 +49,10 @@ public class OrderServiceIMPL implements OrderService {
     }
 
     @Override
-    public OrderDto getById(int id) {
+    public Optional<OrderDto> getById(int id) {
        OrderEntity orderEntity = this.oderRepository.findByIdOrder(id);
        OrderDto orderDto = this.orderMapper.orderEntityToOrderDto(orderEntity);
-       return orderDto;
+       return Optional.ofNullable(orderDto);
 
     }
 
@@ -73,8 +73,11 @@ public class OrderServiceIMPL implements OrderService {
     }
 
     @Override
-    public List<OrderEntity> findByCustomerId(int idCostumer) {
-        return this.oderRepository.findByCustomerId(idCostumer);
+    public List<OrderDto> findByCustomerId(int idCostumer) {
+        List<OrderDto> orderDtos = this.oderRepository.findByCustomerId(idCostumer)
+                .stream().map(orderEntity -> this.orderMapper.orderEntityToOrderDto(orderEntity))
+                .collect(Collectors.toList());
+        return orderDtos;
     }
 
     @Override

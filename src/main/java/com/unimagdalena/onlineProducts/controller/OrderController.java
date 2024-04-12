@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,8 +33,12 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderDto> getByid(@PathVariable int id){
-        return ResponseEntity.ok(this.orderService.getById(id));
+    public ResponseEntity<Optional<OrderDto>> getByid(@PathVariable int id){
+        Optional<OrderDto> orderDto = this.orderService.getById(id);
+        if(orderDto.isPresent()){
+            return ResponseEntity.ok(orderDto);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping()
@@ -74,9 +79,7 @@ public class OrderController {
 
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<List<OrderDto>> findByCustomerId(@PathVariable int customerId){
-        List<OrderDto> orderDtos = this.orderService.findByCustomerId(customerId)
-                .stream().map(orderEntity -> this.orderMapper.orderEntityToOrderDto(orderEntity))
-                .collect(Collectors.toList());
+        List<OrderDto> orderDtos = this.orderService.findByCustomerId(customerId);
         return ResponseEntity.ok(orderDtos);
     }
  
