@@ -61,6 +61,14 @@ class PaymentServiceIMPLTest {
                 .paymentMethod(PaymentEntity.MethodPay.PSE)
                 .build();
 
+        updatePaymentDto = PaymentDto.builder()
+                // payment1
+                .paymentTotal(600.00)
+                .paymentDate(LocalDateTime.of(2023, 4, 10, 0, 0))
+                .paymentMethod(PaymentEntity.MethodPay.CASH)
+                .build();
+
+
         listPaymentEntities.add(payment1); listPaymentEntities.add(payment2);
         listExpectedPaymentDtos.add(paymentDto1);
         listExpectedPaymentDtos.add(paymentDto2);
@@ -92,24 +100,78 @@ class PaymentServiceIMPLTest {
         assertTrue(resultPaymentDto.isPresent());
         assertEquals(paymentDto1, resultPaymentDto.get());
     }
-    @DisplayName("JUnit test for find all payments Method")
+    @DisplayName("JUnit test for find payment by date between Method")
     @Test
     void findAllByPaymentDateBetween() {
+        LocalDateTime startDate = LocalDateTime.of(2021, 4, 10, 0, 0);
+        LocalDateTime endDate = LocalDateTime.of(2024, 5, 15, 0, 0);
+
+        when(this.paymentRepository.findAllByPaymentDateBetween(startDate, endDate)).thenReturn(listPaymentEntities);
+        when(this.paymentMapper.paymentEntityToPaymentDto(payment1)).thenReturn(paymentDto1);
+        when(this.paymentMapper.paymentEntityToPaymentDto(payment2)).thenReturn(paymentDto2);
+
+        List<PaymentDto> resultPaymentDtos = this.paymentServiceIMPL.findAllByPaymentDateBetween(startDate, endDate);
+
+        assertNotNull(resultPaymentDtos);
+        assertEquals(listExpectedPaymentDtos.size(), resultPaymentDtos.size());
+        assertEquals(listExpectedPaymentDtos, resultPaymentDtos);
+        assertEquals(listExpectedPaymentDtos.get(0).getPaymentMethod(), resultPaymentDtos.get(0).getPaymentMethod());
     }
 
+    @DisplayName("JUnit test for save payment Method")
     @Test
     void save() {
+        when(this.paymentRepository.save(payment1)).thenReturn(payment1);
+        PaymentEntity savedPayment = this.paymentServiceIMPL.save(payment1);
+        assertNotNull(savedPayment.getIdPayment());
+        assertEquals(payment1, savedPayment);
     }
 
+    @DisplayName("JUnit test for update payment Method")
     @Test
     void update() {
+        int idPayemnt = 1;
+        when(this.paymentRepository.findById((long) idPayemnt)).thenReturn(Optional.ofNullable(payment1));
+        when(this.paymentRepository.save(payment1)).thenReturn(payment1);
+
+        PaymentEntity resultPaymen = this.paymentServiceIMPL.update(idPayemnt,updatePaymentDto);
+
+        assertNotNull(resultPaymen);
+        assertEquals(600.00, resultPaymen.getPaymentTotal());
+        assertEquals(LocalDateTime.of(2023, 4, 10, 0, 0), resultPaymen.getPaymentDate());
     }
 
+    @DisplayName("JUnit test for invalid update payment Method")
+    @Test
+    void updateInvalid() {
+        int idInvalid = 999;
+        when(this.paymentRepository.findById((long) idInvalid)).thenReturn(Optional.empty());
+        assertThrows(RuntimeException.class, () -> this.paymentServiceIMPL.update(idInvalid, updatePaymentDto));
+    }
+
+    @DisplayName("JUnit test for delete payment Method")
     @Test
     void delete() {
+        int idPayment = 1;
+        this.paymentServiceIMPL.delete(idPayment);
+        verify(this.paymentRepository).deleteById((long) idPayment);
     }
 
+    @DisplayName("JUnit test for exist payment by id Method")
     @Test
     void existById() {
+        int idPayment = 1;
+        when(this.paymentRepository.existsById((long) idPayment)).thenReturn(true);
+        boolean result = this.paymentServiceIMPL.existById(idPayment);
+        assertTrue(result);
+    }
+
+    @DisplayName("JUnit test for exist payment by invalid id")
+    @Test
+    void existByIdInvalid() {
+        int idPayment = 999;
+        when(this.paymentRepository.existsById((long) idPayment)).thenReturn(false);
+        boolean result = this.paymentServiceIMPL.existById(idPayment);
+        assertFalse(result);
     }
 }

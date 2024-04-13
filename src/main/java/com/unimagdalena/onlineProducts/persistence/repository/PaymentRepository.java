@@ -10,5 +10,5 @@ public interface PaymentRepository extends JpaRepository<PaymentEntity, Long> {
     boolean existsByIdPayment(int id);
     PaymentEntity findByIdPayment(int id);
     List<PaymentEntity> findAllByPaymentDateBetween(LocalDateTime startDate, LocalDateTime endDate);
-
+    void delete(int idPayment);
 }
