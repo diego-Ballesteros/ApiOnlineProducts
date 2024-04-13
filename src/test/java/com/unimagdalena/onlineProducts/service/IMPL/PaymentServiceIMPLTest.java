@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -79,22 +80,19 @@ class PaymentServiceIMPLTest {
         assertEquals(listExpectedPaymentDtos, resultPaymentsDto);
         assertEquals(listExpectedPaymentDtos.get(0).getPaymentMethod(), resultPaymentsDto.get(0).getPaymentMethod());
     }
-
+    @DisplayName("JUnit test for get by id payment Method")
     @Test
     void getById() {
         int idPayment = 1;
         when(this.paymentRepository.findByIdPayment(idPayment)).thenReturn(payment1);
         when(this.paymentMapper.paymentEntityToPaymentDto(payment1)).thenReturn(paymentDto1);
 
-        PaymentDto resultPaymentDto = this.paymentServiceIMPL.getById(idPayment);
+        Optional<PaymentDto> resultPaymentDto = this.paymentServiceIMPL.getById(idPayment);
 
-
+        assertTrue(resultPaymentDto.isPresent());
+        assertEquals(paymentDto1, resultPaymentDto.get());
     }
-
-    @Test
-    void existsByIdPayment() {
-    }
-
+    @DisplayName("JUnit test for find all payments Method")
     @Test
     void findAllByPaymentDateBetween() {
     }

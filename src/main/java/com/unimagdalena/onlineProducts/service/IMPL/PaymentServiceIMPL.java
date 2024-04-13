@@ -36,10 +36,7 @@ public class PaymentServiceIMPL implements PaymentService {
         PaymentDto paymentDto = this.paymentMapper.paymentEntityToPaymentDto(paymentEntity);
         return Optional.ofNullable(paymentDto);
     }
-    @Override
-    public boolean existsByIdPayment(int id) {
-        return this.paymentRepository.existsByIdPayment(id);
-    }
+
     @Override
     public List<PaymentDto> findAllByPaymentDateBetween(LocalDateTime startDate, LocalDateTime endDate) {
         List<PaymentDto> paymentDtos = this.paymentRepository.findAllByPaymentDateBetween(startDate,endDate)

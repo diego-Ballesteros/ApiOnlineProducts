@@ -69,7 +69,7 @@ public class PaymentController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete (@PathVariable int id){
-        if(this.paymentService.existsByIdPayment(id)){
+        if(this.paymentService.existById(id)){
             this.paymentService.delete(id);
             return ResponseEntity.ok().build();
         }
