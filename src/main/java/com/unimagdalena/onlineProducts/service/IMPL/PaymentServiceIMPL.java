@@ -31,10 +31,10 @@ public class PaymentServiceIMPL implements PaymentService {
         return paymentDtos;
     }
     @Override
-    public PaymentDto getById(int id) {
+    public Optional<PaymentDto> getById(int id) {
         PaymentEntity paymentEntity = this.paymentRepository.findByIdPayment(id);
         PaymentDto paymentDto = this.paymentMapper.paymentEntityToPaymentDto(paymentEntity);
-        return paymentDto;
+        return Optional.ofNullable(paymentDto);
     }
     @Override
     public boolean existsByIdPayment(int id) {

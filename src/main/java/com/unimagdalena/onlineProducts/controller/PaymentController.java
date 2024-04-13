@@ -12,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/payment")
@@ -30,8 +31,12 @@ public class PaymentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PaymentDto> getById(@PathVariable int id){
-        return ResponseEntity.ok(this.paymentService.getById(id));
+    public ResponseEntity<Optional<PaymentDto>> getById(@PathVariable int id){
+        Optional<PaymentDto> paymentDto = this.paymentService.getById(id);
+        if(paymentDto.isPresent()){
+            return ResponseEntity.ok(paymentDto);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/date-range")

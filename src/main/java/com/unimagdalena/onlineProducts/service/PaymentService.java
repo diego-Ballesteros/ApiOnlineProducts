@@ -5,10 +5,11 @@ import com.unimagdalena.onlineProducts.persistence.entity.PaymentEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface PaymentService {
     List<PaymentDto> getAll();
-    PaymentDto getById(int id);
+    Optional<PaymentDto> getById(int id);
     boolean existsByIdPayment(int id);
     List<PaymentDto> findAllByPaymentDateBetween(LocalDateTime startDate, LocalDateTime endDate);
     PaymentEntity save(PaymentEntity paymentEntity);
