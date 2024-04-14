@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/shipping")
@@ -27,8 +28,12 @@ public class ShipmentDetailController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ShipmentDetailDto> getByid(@PathVariable int id){
-        return ResponseEntity.ok(this.shipmentDetailService.findByIdDetail(id));
+    public ResponseEntity<Optional<ShipmentDetailDto>> getByid(@PathVariable int id){
+        Optional<ShipmentDetailDto> shipmentDetailDto = this.shipmentDetailService.findByIdDetail(id);
+        if (shipmentDetailDto.isPresent()){
+            return ResponseEntity.ok(shipmentDetailDto);
+        }
+        return ResponseEntity.badRequest().build();
     }
     @GetMapping("/carrier")
     public ResponseEntity<List<ShipmentDetailDto>> findAllByCarrier(@RequestParam String carrier){

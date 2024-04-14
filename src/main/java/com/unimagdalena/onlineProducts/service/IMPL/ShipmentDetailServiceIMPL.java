@@ -52,10 +52,10 @@ public class ShipmentDetailServiceIMPL implements ShipmentDetailService {
     }
 
     @Override
-    public ShipmentDetailDto findByIdDetail(int id) {
+    public Optional<ShipmentDetailDto> findByIdDetail(int id) {
         ShipmentDetailEntity shipmentDetailEntity = this.shipmentDetailRepository.findByIdDetail(id);
         ShipmentDetailDto shipmentDetailDto = this.shipmentDetailMapper.ShipmentDetailEntityToShipmentDetailDto(shipmentDetailEntity);
-        return shipmentDetailDto;
+        return Optional.ofNullable(shipmentDetailDto);
     }
 
     @Override
