@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/order-items")
@@ -35,8 +36,12 @@ public class OrderItemController {
         return ResponseEntity.ok(this.orderItemService.findAllByProductId(productId));
     }
     @GetMapping("/{id}")
-    public ResponseEntity<OrderItemDto> getByid(@PathVariable int id){
-        return ResponseEntity.ok(this.orderItemService.findByIdOrderItem(id));
+    public ResponseEntity<Optional<OrderItemDto>> getByid(@PathVariable int id){
+        Optional<OrderItemDto> resultOrderItemDto = this.orderItemService.findByIdOrderItem(id);
+        if(resultOrderItemDto.isPresent()){
+            return ResponseEntity.ok(resultOrderItemDto);
+        }
+        return ResponseEntity.badRequest().build();
     }
     @PostMapping()
     public ResponseEntity<OrderItemDto> addOrderItem (@RequestBody OrderItemDto orderItemDto){

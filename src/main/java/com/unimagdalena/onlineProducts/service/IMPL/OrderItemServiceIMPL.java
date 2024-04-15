@@ -52,10 +52,10 @@ public class OrderItemServiceIMPL implements OrderItemService {
     }
 
     @Override
-    public OrderItemDto findByIdOrderItem(int id) {
+    public Optional<OrderItemDto> findByIdOrderItem(int id) {
         OrderItemEntity orderItemEntity = this.orderItemRepository.findByIdOrderItem(id);
         OrderItemDto orderItemDto = this.orderItemMapper.orderItemEntityToOrderItemDto(orderItemEntity);
-        return orderItemDto;
+        return Optional.ofNullable(orderItemDto);
     }
 
     @Override
